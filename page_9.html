@@ -1,0 +1,192 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Financial Tabs Organization</title>
+<link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" rel="stylesheet"/>
+<script src="https://cdn.tailwindcss.com"></script><style>
+        body {width: 100vw; height: 100vh; overflow: hidden; margin: 0;
+            padding: 0;}
+        .slide {
+            width: 100vw;
+            height: 100vh;
+            position: relative;
+            background: white;
+        }
+        .header-bar {
+            background: linear-gradient(90deg, #40E0D0 0%, #98FF98 100%);
+            height: 100px;
+        }
+        .tab-card {
+            background: #f5f5f5;
+            border-radius: 12px;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+            transition: all 0.3s ease;
+            border-top: 4px solid transparent;
+        }
+        .tab-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 8px 16px rgba(0, 0, 0, 0.1);
+        }
+        .tab-card.personal {
+            border-color: #40E0D0;
+        }
+        .tab-card.family {
+            border-color: #FF7F50;
+        }
+        .tab-card.work {
+            border-color: #98FF98;
+        }
+        .tab-card.studies {
+            border-color: #E6E6FA;
+        }
+        .icon-circle {
+            width: 60px;
+            height: 60px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        .benefit-item {
+            display: flex;
+            align-items: center;
+            margin-bottom: 12px;
+        }
+        .benefit-icon {
+            width: 32px;
+            height: 32px;
+            border-radius: 50%;
+            background: rgba(64, 224, 208, 0.2);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-right: 12px;
+        }
+        .nav {
+            background: rgba(255, 255, 255, 0.9);
+            backdrop-filter: blur(10px);
+        }
+        .nav-btn {
+            @apply text-gray-700 hover:text-teal-500 text-xl px-3 py-2 transition-colors;
+        }
+        .nav-btn.inactive {
+            @apply text-gray-300 cursor-default hover:text-gray-300;
+        }
+   
+html {
+    overflow: hidden;
+}</style>
+</head>
+<body>
+<!-- Navigation -->
+<div class="nav fixed top-0 left-0 right-0 z-50 flex justify-between items-center px-4 py-2">
+    <div class="prev">
+        <a href="page_8.html" class="nav-btn"><i class="fas fa-chevron-left"></i></a>
+    </div>
+    <div class="page-indicator text-sm text-gray-600">Page 9</div>
+    <div class="next">
+        <a href="page_10.html" class="nav-btn"><i class="fas fa-chevron-right"></i></a>
+    </div>
+</div>
+<div class="slide pt-16" style=" overflow: hidden;">
+<!-- Header bar with title -->
+<div class="header-bar flex items-center px-4 sm:px-12">
+<h1 class="text-3xl sm:text-4xl font-bold text-white">Financial Tabs Organization</h1>
+</div>
+<!-- Main content -->
+<div class="p-4 sm:p-12 pt-4 sm:pt-8 overflow-y-auto h-[calc(100vh-100px-64px)]">
+<!-- Introduction text -->
+<p class="text-gray-700 text-lg sm:text-xl mb-8">
+                To avoid mixing personal and work finances, FinMate offers different tabs to organize your budget clearly and conveniently.
+            </p>
+<!-- Tabs visualization -->
+<div class="flex flex-col sm:flex-row mb-8 gap-4">
+<div class="w-full sm:w-1/4">
+<div class="tab-card personal p-4 sm:p-6 h-full">
+<div class="flex items-center mb-4">
+<div class="icon-circle bg-teal-100 mr-4 w-12 h-12 sm:w-16 sm:h-16">
+<i class="fas fa-wallet text-teal-500 text-lg sm:text-2xl"></i>
+</div>
+<h3 class="text-lg sm:text-xl font-semibold text-gray-800">Personal Expenses</h3>
+</div>
+<p class="text-gray-600 text-sm sm:text-base">
+                            Manage your personal spending, hobbies, and individual financial goals in one dedicated space.
+                        </p>
+</div>
+</div>
+<div class="w-full sm:w-1/4">
+<div class="tab-card family p-4 sm:p-6 h-full">
+<div class="flex items-center mb-4">
+<div class="icon-circle bg-orange-100 mr-4 w-12 h-12 sm:w-16 sm:h-16">
+<i class="fas fa-home text-orange-500 text-lg sm:text-2xl"></i>
+</div>
+<h3 class="text-lg sm:text-xl font-semibold text-gray-800">Home & Family</h3>
+</div>
+<p class="text-gray-600 text-sm sm:text-base">
+                            Track household expenses, family budgets, and shared financial responsibilities seamlessly.
+                        </p>
+</div>
+</div>
+<div class="w-full sm:w-1/4">
+<div class="tab-card work p-4 sm:p-6 h-full">
+<div class="flex items-center mb-4">
+<div class="icon-circle bg-green-100 mr-4 w-12 h-12 sm:w-16 sm:h-16">
+<i class="fas fa-briefcase text-green-500 text-lg sm:text-2xl"></i>
+</div>
+<h3 class="text-lg sm:text-xl font-semibold text-gray-800">Work & Business</h3>
+</div>
+<p class="text-gray-600 text-sm sm:text-base">
+                            Separate business expenses, work-related costs, and revenue tracking for freelancers and entrepreneurs.
+                        </p>
+</div>
+</div>
+<div class="w-full sm:w-1/4">
+<div class="tab-card studies p-4 sm:p-6 h-full">
+<div class="flex items-center mb-4">
+<div class="icon-circle bg-indigo-100 mr-4 w-12 h-12 sm:w-16 sm:h-16">
+<i class="fas fa-graduation-cap text-indigo-500 text-lg sm:text-2xl"></i>
+</div>
+<h3 class="text-lg sm:text-xl font-semibold text-gray-800">Studies</h3>
+</div>
+<p class="text-gray-600 text-sm sm:text-base">
+                            Manage education expenses, scholarships, and academic financial goals in one organized section.
+                        </p>
+</div>
+</div>
+</div>
+<!-- Benefits section -->
+<div class="bg-gray-50 rounded-lg p-4 sm:p-6">
+<h3 class="text-lg sm:text-xl font-semibold text-gray-700 mb-4">The Benefits of Financial Tabs</h3>
+<div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+<div class="benefit-item">
+<div class="benefit-icon">
+<i class="fas fa-chart-pie text-teal-500"></i>
+</div>
+<p class="text-gray-600 text-sm sm:text-base">Clear visualization of spending patterns across different life areas</p>
+</div>
+<div class="benefit-item">
+<div class="benefit-icon">
+<i class="fas fa-bullseye text-teal-500"></i>
+</div>
+<p class="text-gray-600 text-sm sm:text-base">Targeted budget limits for each category to prevent overspending</p>
+</div>
+<div class="benefit-item">
+<div class="benefit-icon">
+<i class="fas fa-file-invoice-dollar text-teal-500"></i>
+</div>
+<p class="text-gray-600 text-sm sm:text-base">Separate tracking of income and expenses for tax preparation</p>
+</div>
+<div class="benefit-item">
+<div class="benefit-icon">
+<i class="fas fa-users text-teal-500"></i>
+</div>
+<p class="text-gray-600 text-sm sm:text-base">Easy sharing of specific tabs with family members for joint budgeting</p>
+</div>
+</div>
+</div>
+</div>
+</div>
+</body>
+</html>

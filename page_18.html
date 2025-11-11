@@ -1,0 +1,174 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Why Choose FinMate</title>
+<link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" rel="stylesheet"/>
+<script src="https://cdn.tailwindcss.com"></script><style>
+        body {width: 100vw; height: 100vh; overflow: hidden; margin: 0;
+            padding: 0;}
+        .slide {
+            width: 100vw;
+            height: 100vh;
+            position: relative;
+            background: white;
+        }
+        .header-bar {
+            background: linear-gradient(90deg, #40E0D0 0%, #98FF98 100%);
+            height: 100px;
+        }
+        .benefit-card {
+            background: #f5f5f5;
+            border-radius: 12px;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+            transition: all 0.3s ease;
+            height: 100%;
+        }
+        .benefit-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 8px 16px rgba(0, 0, 0, 0.1);
+        }
+        .icon-circle {
+            width: 60px;
+            height: 60px;
+            border-radius: 50%;
+            background: rgba(64, 224, 208, 0.2);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        .conclusion-box {
+            background: linear-gradient(90deg, rgba(64, 224, 208, 0.1) 0%, rgba(152, 255, 152, 0.1) 100%);
+            border-left: 4px solid #40E0D0;
+        }
+        .nav {
+            background: rgba(255, 255, 255, 0.9);
+            backdrop-filter: blur(10px);
+        }
+        .nav-btn {
+            @apply text-gray-700 hover:text-teal-500 text-xl px-3 py-2 transition-colors;
+        }
+        .nav-btn.inactive {
+            @apply text-gray-300 cursor-default hover:text-gray-300;
+        }
+   
+html {
+    overflow: hidden;
+}</style>
+</head>
+<body>
+<!-- Navigation -->
+<div class="nav fixed top-0 left-0 right-0 z-50 flex justify-between items-center px-4 py-2">
+    <div class="prev">
+        <a href="page_17.html" class="nav-btn"><i class="fas fa-chevron-left"></i></a>
+    </div>
+    <div class="page-indicator text-sm text-gray-600">Page 18</div>
+    <div class="next">
+        <a href="#" class="nav-btn inactive"><i class="fas fa-chevron-right"></i></a>
+    </div>
+</div>
+<div class="slide pt-16" style=" overflow: hidden;">
+<!-- Header bar with title -->
+<div class="header-bar flex items-center px-4 sm:px-12">
+<h1 class="text-3xl sm:text-4xl font-bold text-white">Why Choose FinMate</h1>
+</div>
+<!-- Main content -->
+<div class="p-4 sm:p-12 pt-4 sm:pt-8 overflow-y-auto h-[calc(100vh-100px-64px)]">
+<!-- Introduction text -->
+<p class="text-gray-700 text-lg sm:text-xl mb-8">
+                FinMate is not just an app. It's your financial companion that makes money management easy, lively, and human.
+            </p>
+<!-- Benefits grid -->
+<div class="grid grid-cols-1 sm:grid-cols-3 gap-4 sm:gap-6 mb-8">
+<!-- Benefit 1 -->
+<div class="benefit-card p-4 sm:p-6">
+<div class="flex items-start mb-4">
+<div class="icon-circle mr-4">
+<i class="fas fa-robot text-teal-500 text-xl sm:text-2xl"></i>
+</div>
+<h3 class="text-lg sm:text-xl font-semibold text-gray-800">AI-Powered Assistance</h3>
+</div>
+<p class="text-gray-600 text-sm sm:text-base">
+                        Our intelligent assistant analyzes your spending patterns and provides personalized advice to improve your financial health.
+                    </p>
+</div>
+<!-- Benefit 2 -->
+<div class="benefit-card p-4 sm:p-6">
+<div class="flex items-start mb-4">
+<div class="icon-circle mr-4">
+<i class="fas fa-chart-line text-teal-500 text-xl sm:text-2xl"></i>
+</div>
+<h3 class="text-lg sm:text-xl font-semibold text-gray-800">Complete Financial Overview</h3>
+</div>
+<p class="text-gray-600 text-sm sm:text-base">
+                        Automatically tracks expenses, analyzes habits, and visualizes your financial data across all your bank accounts.
+                    </p>
+</div>
+<!-- Benefit 3 -->
+<div class="benefit-card p-4 sm:p-6">
+<div class="flex items-start mb-4">
+<div class="icon-circle mr-4">
+<i class="fas fa-bullseye text-teal-500 text-xl sm:text-2xl"></i>
+</div>
+<h3 class="text-lg sm:text-xl font-semibold text-gray-800">Goal-Oriented Planning</h3>
+</div>
+<p class="text-gray-600 text-sm sm:text-base">
+                        Set financial goals and watch progress in real-time with our intuitive savings calculator and visual trackers.
+                    </p>
+</div>
+<!-- Benefit 4 -->
+<div class="benefit-card p-4 sm:p-6">
+<div class="flex items-start mb-4">
+<div class="icon-circle mr-4">
+<i class="fas fa-comments text-teal-500 text-xl sm:text-2xl"></i>
+</div>
+<h3 class="text-lg sm:text-xl font-semibold text-gray-800">Conversational Interface</h3>
+</div>
+<p class="text-gray-600 text-sm sm:text-base">
+                        Manage your finances through simple chat messages, just like talking to a friend. No complex forms or technical knowledge needed.
+                    </p>
+</div>
+<!-- Benefit 5 -->
+<div class="benefit-card p-4 sm:p-6">
+<div class="flex items-start mb-4">
+<div class="icon-circle mr-4">
+<i class="fas fa-users text-teal-500 text-xl sm:text-2xl"></i>
+</div>
+<h3 class="text-lg sm:text-xl font-semibold text-gray-800">Family & Shared Budgets</h3>
+</div>
+<p class="text-gray-600 text-sm sm:text-base">
+                        Invite family members to share budgets with different roles, perfect for transparent financial management.
+                    </p>
+</div>
+<!-- Benefit 6 -->
+<div class="benefit-card p-4 sm:p-6">
+<div class="flex items-start mb-4">
+<div class="icon-circle mr-4">
+<i class="fas fa-shield-alt text-teal-500 text-xl sm:text-2xl"></i>
+</div>
+<h3 class="text-lg sm:text-xl font-semibold text-gray-800">Secure & Private</h3>
+</div>
+<p class="text-gray-600 text-sm sm:text-base">
+                        Bank-level security with end-to-end encryption and biometric protection to keep your financial data safe.
+                    </p>
+</div>
+</div>
+<!-- Conclusion box -->
+<div class="conclusion-box p-4 sm:p-6 rounded-lg mt-4">
+<div class="flex items-center">
+<div class="icon-circle mr-4 sm:mr-6">
+<i class="fas fa-heart text-teal-500 text-xl sm:text-2xl"></i>
+</div>
+<div>
+<h3 class="text-xl sm:text-2xl font-semibold text-gray-800 mb-2">Our Mission</h3>
+<p class="text-gray-700 text-base sm:text-lg">
+                            FinMate helps people be friends with their money. We create a tool that makes financial literacy simple, accessible, and interesting.
+                        </p>
+</div>
+</div>
+</div>
+</div>
+</div>
+</body>
+</html>

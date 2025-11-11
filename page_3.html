@@ -1,0 +1,242 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Project Essence &amp; Vision</title>
+<link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" rel="stylesheet"/>
+<script src="https://d3js.org/d3.v7.min.js"></script>
+<script src="https://cdn.tailwindcss.com"></script><style>
+        body {width: 100vw; height: 100vh; overflow: hidden; margin: 0;
+            padding: 0;}
+        .slide {
+            width: 100vw;
+            height: 100vh;
+            position: relative;
+            background: white;
+        }
+        .header-bar {
+            background: linear-gradient(90deg, #40E0D0 0%, #98FF98 100%);
+            height: 100px;
+        }
+        .essence-card {
+            background: #f5f5f5;
+            border-radius: 12px;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+            transition: all 0.3s ease;
+        }
+        .essence-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 8px 16px rgba(0, 0, 0, 0.1);
+        }
+        .icon-circle {
+            width: 60px;
+            height: 60px;
+            border-radius: 50%;
+            background: rgba(64, 224, 208, 0.2);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        #transformation-viz {
+            width: 100%;
+            height: 200px;
+        }
+        .nav {
+            background: rgba(255, 255, 255, 0.9);
+            backdrop-filter: blur(10px);
+        }
+        .nav-btn {
+            @apply text-gray-700 hover:text-teal-500 text-xl px-3 py-2 transition-colors;
+        }
+        .nav-btn.inactive {
+            @apply text-gray-300 cursor-default hover:text-gray-300;
+        }
+   
+html {
+    overflow: hidden;
+}</style>
+</head>
+<body>
+<!-- Navigation -->
+<div class="nav fixed top-0 left-0 right-0 z-50 flex justify-between items-center px-4 py-2">
+    <div class="prev">
+        <a href="page_2.html" class="nav-btn"><i class="fas fa-chevron-left"></i></a>
+    </div>
+    <div class="page-indicator text-sm text-gray-600">Page 3</div>
+    <div class="next">
+        <a href="page_4.html" class="nav-btn"><i class="fas fa-chevron-right"></i></a>
+    </div>
+</div>
+<div class="slide pt-16" style=" overflow: hidden;">
+<!-- Header bar with title -->
+<div class="header-bar flex items-center px-4 sm:px-12">
+<h1 class="text-3xl sm:text-4xl font-bold text-white">Project Essence &amp; Vision</h1>
+</div>
+<!-- Main content -->
+<div class="p-4 sm:p-12 pt-4 sm:pt-8 overflow-y-auto h-[calc(100vh-100px-64px)]">
+<!-- Introduction text -->
+<p class="text-gray-700 text-lg sm:text-xl mb-8">
+                FinMate transforms financial management from dry numbers into intelligent, conversational money awareness and decision-making.
+            </p>
+<!-- Project essence cards -->
+<div class="grid grid-cols-1 sm:grid-cols-3 gap-4 sm:gap-6 mb-8">
+<!-- Essence 1 -->
+<div class="essence-card p-4 sm:p-6">
+<div class="flex items-start mb-4">
+<div class="icon-circle mr-4 flex-shrink-0">
+<i class="fas fa-brain text-teal-500 text-xl sm:text-2xl"></i>
+</div>
+<h3 class="text-lg sm:text-xl font-semibold text-gray-800">Intelligent Assistant</h3>
+</div>
+<p class="text-gray-600 text-sm sm:text-base">
+                        An AI-powered financial assistant that analyzes spending patterns and provides personalized insights.
+                    </p>
+</div>
+<!-- Essence 2 -->
+<div class="essence-card p-4 sm:p-6">
+<div class="flex items-start mb-4">
+<div class="icon-circle mr-4 flex-shrink-0">
+<i class="fas fa-comments text-teal-500 text-xl sm:text-2xl"></i>
+</div>
+<h3 class="text-lg sm:text-xl font-semibold text-gray-800">Conversational Interface</h3>
+</div>
+<p class="text-gray-600 text-sm sm:text-base">
+                        Communicate with your finances using natural language, making financial management feel like a conversation.
+                    </p>
+</div>
+<!-- Essence 3 -->
+<div class="essence-card p-4 sm:p-6">
+<div class="flex items-start mb-4">
+<div class="icon-circle mr-4 flex-shrink-0">
+<i class="fas fa-lightbulb text-teal-500 text-xl sm:text-2xl"></i>
+</div>
+<h3 class="text-lg sm:text-xl font-semibold text-gray-800">Financial Awareness</h3>
+</div>
+<p class="text-gray-600 text-sm sm:text-base">
+                        Transform complex financial data into clear, actionable insights that empower better money decisions.
+                    </p>
+</div>
+</div>
+<!-- Transformation visualization -->
+<div class="bg-gray-50 rounded-lg p-4">
+<h3 class="text-base sm:text-lg font-semibold text-gray-700 mb-2">From Dry Numbers to Smart Insights</h3>
+<div id="transformation-viz"></div>
+</div>
+</div>
+</div>
+<script>
+        // D3.js visualization representing the transformation from dry numbers to smart insights
+        document.addEventListener('DOMContentLoaded', function() {
+            const width = document.getElementById('transformation-viz').clientWidth;
+            const height = document.getElementById('transformation-viz').clientHeight;
+           
+            const svg = d3.select('#transformation-viz')
+                .append('svg')
+                .attr('width', width)
+                .attr('height', height);
+           
+            // Define the transformation path
+            const pathData = [
+                {x: width * 0.1, y: height * 0.5},
+                {x: width * 0.3, y: height * 0.7},
+                {x: width * 0.5, y: height * 0.3},
+                {x: width * 0.7, y: height * 0.6},
+                {x: width * 0.9, y: height * 0.4}
+            ];
+           
+            // Create a line generator
+            const lineGenerator = d3.line()
+                .x(d => d.x)
+                .y(d => d.y)
+                .curve(d3.curveCardinal);
+           
+            // Add the transformation path
+            svg.append('path')
+                .attr('d', lineGenerator(pathData))
+                .attr('stroke', '#40E0D0')
+                .attr('stroke-width', 4)
+                .attr('fill', 'none')
+                .attr('stroke-dasharray', '8,4');
+           
+            // Add "before" points (dry numbers)
+            svg.selectAll('.before-point')
+                .data([pathData[0], pathData[1]])
+                .enter()
+                .append('circle')
+                .attr('class', 'before-point')
+                .attr('cx', d => d.x)
+                .attr('cy', d => d.y)
+                .attr('r', 8)
+                .attr('fill', '#E6E6FA')
+                .attr('stroke', '#40E0D0')
+                .attr('stroke-width', 2);
+           
+            // Add "after" points (smart insights)
+            svg.selectAll('.after-point')
+                .data([pathData[3], pathData[4]])
+                .enter()
+                .append('circle')
+                .attr('class', 'after-point')
+                .attr('cx', d => d.x)
+                .attr('cy', d => d.y)
+                .attr('r', 8)
+                .attr('fill', '#FF7F50')
+                .attr('stroke', '#FF7F50')
+                .attr('stroke-width', 2);
+           
+            // Add transformation point (AI processing)
+            svg.append('circle')
+                .attr('cx', pathData[2].x)
+                .attr('cy', pathData[2].y)
+                .attr('r', 12)
+                .attr('fill', '#98FF98')
+                .attr('stroke', '#40E0D0')
+                .attr('stroke-width', 3);
+           
+            // Add AI icon at transformation point
+            svg.append('text')
+                .attr('x', pathData[2].x)
+                .attr('y', pathData[2].y + 5)
+                .attr('text-anchor', 'middle')
+                .attr('font-size', '16px')
+                .attr('fill', '#40E0D0')
+                .text('🤖');
+           
+            // Add text labels
+            svg.append('text')
+                .attr('x', width * 0.1)
+                .attr('y', height * 0.8)
+                .attr('text-anchor', 'middle')
+                .attr('font-size', '14px')
+                .attr('fill', '#666')
+                .text('Dry Numbers');
+           
+            svg.append('text')
+                .attr('x', width * 0.9)
+                .attr('y', height * 0.7)
+                .attr('text-anchor', 'middle')
+                .attr('font-size', '14px')
+                .attr('fill', '#666')
+                .text('Smart Insights');
+           
+            // Add intermediate labels
+            svg.append('text')
+                .attr('x', width * 0.3)
+                .attr('y', height * 0.3)
+                .attr('text-anchor', 'middle')
+                .attr('font-size', '12px')
+                .attr('fill', '#666')
+                .text('AI Analysis');
+           
+            svg.append('text')
+                .attr('x', width * 0.7)
+                .attr('y', height * 0.3)
+                .attr('text-anchor', 'middle')
+                .attr('font-size', '12px')
+                .attr('fill', '#666')
+                .text('Actionable Insights');
+        });
+    </script>
+</body>
+</html>

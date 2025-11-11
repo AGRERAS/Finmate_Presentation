@@ -1,0 +1,219 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>The Financial Problem We Face</title>
+<link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" rel="stylesheet"/>
+<script src="https://d3js.org/d3.v7.min.js"></script>
+<script src="https://cdn.tailwindcss.com"></script><style>
+        body {width: 100vw; height: 100vh; overflow: hidden; margin: 0;
+            padding: 0;}
+        .slide {
+            width: 100vw;
+            height: 100vh;
+            position: relative;
+            background: white;
+        }
+        .header-bar {
+            background: linear-gradient(90deg, #40E0D0 0%, #98FF98 100%);
+            height: 100px;
+        }
+        .problem-card {
+            background: #f5f5f5;
+            border-radius: 12px;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+            transition: all 0.3s ease;
+        }
+        .problem-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 8px 16px rgba(0, 0, 0, 0.1);
+        }
+        .icon-circle {
+            width: 60px;
+            height: 60px;
+            border-radius: 50%;
+            background: rgba(64, 224, 208, 0.2);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        #visualization {
+            width: 100%;
+            height: 200px;
+        }
+        .nav {
+            background: rgba(255, 255, 255, 0.9);
+            backdrop-filter: blur(10px);
+        }
+        .nav-btn {
+            @apply text-gray-700 hover:text-teal-500 text-xl px-3 py-2 transition-colors;
+        }
+        .nav-btn.inactive {
+            @apply text-gray-300 cursor-default hover:text-gray-300;
+        }
+   
+html {
+    overflow: hidden;
+}</style>
+</head>
+<body>
+<!-- Navigation -->
+<div class="nav fixed top-0 left-0 right-0 z-50 flex justify-between items-center px-4 py-2">
+    <div class="prev">
+        <a href="page_1.html" class="nav-btn"><i class="fas fa-chevron-left"></i></a>
+    </div>
+    <div class="page-indicator text-sm text-gray-600">Page 2</div>
+    <div class="next">
+        <a href="page_3.html" class="nav-btn"><i class="fas fa-chevron-right"></i></a>
+    </div>
+</div>
+<div class="slide pt-16" style=" overflow: hidden;">
+<!-- Header bar with title -->
+<div class="header-bar flex items-center px-4 sm:px-12">
+<h1 class="text-3xl sm:text-4xl font-bold text-white">The Financial Problem We Face</h1>
+</div>
+<!-- Main content -->
+<div class="p-4 sm:p-12 pt-4 sm:pt-8 overflow-y-auto h-[calc(100vh-100px-64px)]">
+<!-- Introduction text -->
+<p class="text-gray-700 text-lg sm:text-xl mb-8">
+                Today, most people don&#39;t know where their money goes. We constantly pay for food, transport, entertainment, and subscriptions — but rarely analyze why we spend exactly like that.
+            </p>
+<!-- Problem cards -->
+<div class="grid grid-cols-1 sm:grid-cols-3 gap-4 sm:gap-6 mb-8">
+<!-- Problem 1 -->
+<div class="problem-card p-4 sm:p-6">
+<div class="flex items-start mb-4">
+<div class="icon-circle mr-4 flex-shrink-0">
+<i class="fas fa-eye-slash text-teal-500 text-xl sm:text-2xl"></i>
+</div>
+<h3 class="text-lg sm:text-xl font-semibold text-gray-800">Lack of Awareness</h3>
+</div>
+<p class="text-gray-600 text-sm sm:text-base">
+                        Without tracking spending habits, we remain unaware of where our money goes, making it impossible to identify unnecessary expenses.
+                    </p>
+</div>
+<!-- Problem 2 -->
+<div class="problem-card p-4 sm:p-6">
+<div class="flex items-start mb-4">
+<div class="icon-circle mr-4 flex-shrink-0">
+<i class="fas fa-balance-scale text-teal-500 text-xl sm:text-2xl"></i>
+</div>
+<h3 class="text-lg sm:text-xl font-semibold text-gray-800">Budget Loss</h3>
+</div>
+<p class="text-gray-600 text-sm sm:text-base">
+                        Constant spending without analysis leads to budget loss, preventing users from allocating funds effectively.
+                    </p>
+</div>
+<!-- Problem 3 -->
+<div class="problem-card p-4 sm:p-6">
+<div class="flex items-start mb-4">
+<div class="icon-circle mr-4 flex-shrink-0">
+<i class="fas fa-piggy-bank text-teal-500 text-xl sm:text-2xl"></i>
+</div>
+<h3 class="text-lg sm:text-xl font-semibold text-gray-800">Inadequate Saving</h3>
+</div>
+<p class="text-gray-600 text-sm sm:text-base">
+                        Unable to save for important goals due to lack of financial insight and planning.
+                    </p>
+</div>
+</div>
+<!-- Visualization of financial loss -->
+<div class="bg-gray-50 rounded-lg p-4">
+<h3 class="text-base sm:text-lg font-semibold text-gray-700 mb-2">The Consequence: Financial Instability</h3>
+<div id="visualization"></div>
+</div>
+</div>
+</div>
+<script>
+        // Simple D3.js visualization representing financial instability
+        document.addEventListener('DOMContentLoaded', function() {
+            const width = document.getElementById('visualization').clientWidth;
+            const height = document.getElementById('visualization').clientHeight;
+           
+            const svg = d3.select('#visualization')
+                .append('svg')
+                .attr('width', width)
+                .attr('height', height);
+           
+            // Create a conceptual visualization of money flowing out without control
+            const arrowData = [
+                {x1: width * 0.1, y1: height * 0.5, x2: width * 0.3, y2: height * 0.5},
+                {x1: width * 0.4, y1: height * 0.5, x2: width * 0.6, y2: height * 0.5},
+                {x1: width * 0.7, y1: height * 0.5, x2: width * 0.9, y2: height * 0.5}
+            ];
+           
+            // Add arrows representing uncontrolled spending
+            svg.selectAll('line')
+                .data(arrowData)
+                .enter()
+                .append('line')
+                .attr('x1', d => d.x1)
+                .attr('y1', d => d.y1)
+                .attr('x2', d => d.x2)
+                .attr('y2', d => d.y2)
+                .attr('stroke', '#40E0D0')
+                .attr('stroke-width', 4)
+                .attr('marker-end', 'url(#arrow)');
+           
+            // Add arrowhead marker
+            svg.append('defs').append('marker')
+                .attr('id', 'arrow')
+                .attr('viewBox', '0 -5 10 10')
+                .attr('refX', 8)
+                .attr('refY', 0)
+                .attr('markerWidth', 6)
+                .attr('markerHeight', 6)
+                .attr('orient', 'auto')
+                .append('path')
+                .attr('d', 'M0,-5L10,0L0,5')
+                .attr('fill', '#40E0D0');
+           
+            // Add "money" symbols
+            const moneySymbols = [
+                {x: width * 0.2, y: height * 0.5 - 20, symbol: '☕'},
+                {x: width * 0.4, y: height * 0.5 - 20, symbol: '🍔'},
+                {x: width * 0.6, y: height * 0.5 - 20, symbol: '🎬'},
+                {x: width * 0.8, y: height * 0.5 - 20, symbol: '📦'}
+            ];
+           
+            svg.selectAll('.money')
+                .data(moneySymbols)
+                .enter()
+                .append('text')
+                .attr('class', 'money')
+                .attr('x', d => d.x)
+                .attr('y', d => d.y)
+                .attr('text-anchor', 'middle')
+                .attr('font-size', '20px')
+                .text(d => d.symbol);
+           
+            // Add "debt" symbol at the end
+            svg.append('text')
+                .attr('x', width * 0.9)
+                .attr('y', height * 0.5 + 20)
+                .attr('text-anchor', 'middle')
+                .attr('font-size', '24px')
+                .attr('fill', '#FF7F50')
+                .text('💳');
+           
+            // Add text labels
+            svg.append('text')
+                .attr('x', width * 0.05)
+                .attr('y', height * 0.2)
+                .attr('text-anchor', 'start')
+                .attr('font-size', '14px')
+                .attr('fill', '#666')
+                .text('Untracked Expenses');
+           
+            svg.append('text')
+                .attr('x', width * 0.95)
+                .attr('y', height * 0.8)
+                .attr('text-anchor', 'end')
+                .attr('font-size', '14px')
+                .attr('fill', '#666')
+                .text('Financial Problems');
+        });
+    </script>
+</body>
+</html>

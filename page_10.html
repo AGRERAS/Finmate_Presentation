@@ -1,0 +1,281 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Family Mode Collaboration</title>
+<link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" rel="stylesheet"/>
+<script src="https://d3js.org/d3.v7.min.js"></script>
+<script src="https://cdn.tailwindcss.com"></script><style>
+        body {width: 100vw; height: 100vh; overflow: hidden; margin: 0;
+            padding: 0;}
+        .slide {
+            width: 100vw;
+            height: 100vh;
+            position: relative;
+            background: white;
+        }
+        .header-bar {
+            background: linear-gradient(90deg, #40E0D0 0%, #98FF98 100%);
+            height: 100px;
+        }
+        .role-card {
+            background: #f5f5f5;
+            border-radius: 12px;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+            transition: all 0.3s ease;
+            border-left: 5px solid transparent;
+        }
+        .role-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 8px 16px rgba(0, 0, 0, 0.1);
+        }
+        .admin-role {
+            border-left-color: #40E0D0;
+        }
+        .participant-role {
+            border-left-color: #98FF98;
+        }
+        .observer-role {
+            border-left-color: #E6E6FA;
+        }
+        .icon-circle {
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        #collaboration-viz {
+            width: 100%;
+            height: 200px;
+        }
+        .nav {
+            background: rgba(255, 255, 255, 0.9);
+            backdrop-filter: blur(10px);
+        }
+        .nav-btn {
+            @apply text-gray-700 hover:text-teal-500 text-xl px-3 py-2 transition-colors;
+        }
+        .nav-btn.inactive {
+            @apply text-gray-300 cursor-default hover:text-gray-300;
+        }
+   
+html {
+    overflow: hidden;
+}</style>
+</head>
+<body>
+<!-- Navigation -->
+<div class="nav fixed top-0 left-0 right-0 z-50 flex justify-between items-center px-4 py-2">
+    <div class="prev">
+        <a href="page_9.html" class="nav-btn"><i class="fas fa-chevron-left"></i></a>
+    </div>
+    <div class="page-indicator text-sm text-gray-600">Page 10</div>
+    <div class="next">
+        <a href="page_11.html" class="nav-btn"><i class="fas fa-chevron-right"></i></a>
+    </div>
+</div>
+<div class="slide pt-16" style=" overflow: hidden;">
+<!-- Header bar with title -->
+<div class="header-bar flex items-center px-4 sm:px-12">
+<h1 class="text-3xl sm:text-4xl font-bold text-white">Family Mode Collaboration</h1>
+</div>
+<!-- Main content -->
+<div class="p-4 sm:p-12 pt-4 sm:pt-8 overflow-y-auto h-[calc(100vh-100px-64px)]">
+<!-- Introduction text -->
+<p class="text-gray-700 text-lg sm:text-xl mb-6">
+                You can invite family members to join your budget, enabling transparent financial planning together.
+            </p>
+<!-- Role cards -->
+<div class="grid grid-cols-1 sm:grid-cols-3 gap-4 sm:gap-6 mb-6">
+<!-- Administrator role -->
+<div class="role-card admin-role p-4 sm:p-5">
+<div class="flex items-start mb-3">
+<div class="icon-circle bg-teal-100 mr-4 w-12 h-12 sm:w-14 sm:h-14">
+<i class="fas fa-crown text-teal-500 text-lg sm:text-xl"></i>
+</div>
+<h3 class="text-lg sm:text-xl font-semibold text-gray-800">Administrator</h3>
+</div>
+<ul class="text-gray-600 ml-4 list-disc text-sm sm:text-base">
+<li>Full access to all features</li>
+<li>Can add family members</li>
+<li>Manage budget limits</li>
+</ul>
+</div>
+<!-- Participant role -->
+<div class="role-card participant-role p-4 sm:p-5">
+<div class="flex items-start mb-3">
+<div class="icon-circle bg-green-100 mr-4 w-12 h-12 sm:w-14 sm:h-14">
+<i class="fas fa-user-friends text-green-500 text-lg sm:text-xl"></i>
+</div>
+<h3 class="text-lg sm:text-xl font-semibold text-gray-800">Participant</h3>
+</div>
+<ul class="text-gray-600 ml-4 list-disc text-sm sm:text-base">
+<li>Can add their own expenses</li>
+<li>View shared budget</li>
+<li>Receive notifications</li>
+</ul>
+</div>
+<!-- Observer role -->
+<div class="role-card observer-role p-4 sm:p-5">
+<div class="flex items-start mb-3">
+<div class="icon-circle bg-indigo-100 mr-4 w-12 h-12 sm:w-14 sm:h-14">
+<i class="fas fa-eye text-indigo-500 text-lg sm:text-xl"></i>
+</div>
+<h3 class="text-lg sm:text-xl font-semibold text-gray-800">Observer</h3>
+</div>
+<ul class="text-gray-600 ml-4 list-disc text-sm sm:text-base">
+<li>View all transactions</li>
+<li>No editing rights</li>
+<li>Financial transparency</li>
+</ul>
+</div>
+</div>
+<!-- Collaboration visualization -->
+<div class="bg-gray-50 rounded-lg p-4 mb-6">
+<h3 class="text-base sm:text-lg font-semibold text-gray-700 mb-2">Family Budget Collaboration</h3>
+<div id="collaboration-viz"></div>
+</div>
+<!-- Benefits -->
+<div class="flex flex-col sm:flex-row justify-between gap-4">
+<div class="flex items-center w-full sm:w-1/3">
+<div class="icon-circle bg-teal-100 mr-3 w-10 h-10 sm:w-12 sm:h-12">
+<i class="fas fa-chart-line text-teal-500"></i>
+</div>
+<p class="text-gray-700 text-sm sm:text-base">Transparent financial decisions</p>
+</div>
+<div class="flex items-center w-full sm:w-1/3">
+<div class="icon-circle bg-teal-100 mr-3 w-10 h-10 sm:w-12 sm:h-12">
+<i class="fas fa-hand-holding-usd text-teal-500"></i>
+</div>
+<p class="text-gray-700 text-sm sm:text-base">Shared financial responsibility</p>
+</div>
+<div class="flex items-center w-full sm:w-1/3">
+<div class="icon-circle bg-teal-100 mr-3 w-10 h-10 sm:w-12 sm:h-12">
+<i class="fas fa-bullseye text-teal-500"></i>
+</div>
+<p class="text-gray-700 text-sm sm:text-base">Achieve family financial goals</p>
+</div>
+</div>
+</div>
+</div>
+<script>
+        // D3.js visualization for family collaboration
+        document.addEventListener('DOMContentLoaded', function() {
+            const width = document.getElementById('collaboration-viz').clientWidth;
+            const height = document.getElementById('collaboration-viz').clientHeight;
+           
+            const svg = d3.select('#collaboration-viz')
+                .append('svg')
+                .attr('width', width)
+                .attr('height', height);
+           
+            // Define family members
+            const members = [
+                {id: 1, name: "Mom", role: "Admin", x: width * 0.2, y: height * 0.4},
+                {id: 2, name: "Dad", role: "Participant", x: width * 0.4, y: height * 0.4},
+                {id: 3, name: "Child", role: "Observer", x: width * 0.6, y: height * 0.4},
+                {id: 4, name: "Partner", role: "Participant", x: width * 0.8, y: height * 0.4}
+            ];
+           
+            // Define shared budget
+            const budget = {x: width * 0.5, y: height * 0.7, radius: 60};
+           
+            // Draw connections between members and budget
+            svg.selectAll('line')
+                .data(members)
+                .enter()
+                .append('line')
+                .attr('x1', d => d.x)
+                .attr('y1', d => d.y)
+                .attr('x2', budget.x)
+                .attr('y2', budget.y)
+                .attr('stroke', d => {
+                    if (d.role === "Admin") return '#40E0D0';
+                    if (d.role === "Participant") return '#98FF98';
+                    return '#E6E6FA';
+                })
+                .attr('stroke-width', 2)
+                .attr('stroke-dasharray', d => d.role === "Observer" ? '5,5' : '0');
+           
+            // Draw budget circle
+            svg.append('circle')
+                .attr('cx', budget.x)
+                .attr('cy', budget.y)
+                .attr('r', budget.radius)
+                .attr('fill', '#f5f5f5')
+                .attr('stroke', '#40E0D0')
+                .attr('stroke-width', 2);
+           
+            // Add budget text
+            svg.append('text')
+                .attr('x', budget.x)
+                .attr('y', budget.y)
+                .attr('text-anchor', 'middle')
+                .attr('dominant-baseline', 'middle')
+                .attr('font-size', '14px')
+                .attr('fill', '#333')
+                .text('Shared Budget');
+           
+            // Draw member circles
+            svg.selectAll('.member')
+                .data(members)
+                .enter()
+                .append('circle')
+                .attr('class', 'member')
+                .attr('cx', d => d.x)
+                .attr('cy', d => d.y)
+                .attr('r', 25)
+                .attr('fill', d => {
+                    if (d.role === "Admin") return 'rgba(64, 224, 208, 0.2)';
+                    if (d.role === "Participant") return 'rgba(152, 255, 152, 0.2)';
+                    return 'rgba(230, 230, 250, 0.2)';
+                })
+                .attr('stroke', d => {
+                    if (d.role === "Admin") return '#40E0D0';
+                    if (d.role === "Participant") return '#98FF98';
+                    return '#E6E6FA';
+                })
+                .attr('stroke-width', 2);
+           
+            // Add member icons
+            svg.selectAll('.member-icon')
+                .data(members)
+                .enter()
+                .append('text')
+                .attr('class', 'member-icon')
+                .attr('x', d => d.x)
+                .attr('y', d => d.y)
+                .attr('text-anchor', 'middle')
+                .attr('dominant-baseline', 'central')
+                .attr('font-family', 'FontAwesome')
+                .attr('font-size', '16px')
+                .attr('fill', d => {
+                    if (d.role === "Admin") return '#40E0D0';
+                    if (d.role === "Participant") return '#98FF98';
+                    return '#E6E6FA';
+                })
+                .text(d => {
+                    if (d.role === "Admin") return '\uf521'; // crown
+                    if (d.role === "Participant") return '\uf0c0'; // users
+                    return '\uf06e'; // eye
+                });
+           
+            // Add member labels
+            svg.selectAll('.member-label')
+                .data(members)
+                .enter()
+                .append('text')
+                .attr('class', 'member-label')
+                .attr('x', d => d.x)
+                .attr('y', d => d.y + 35)
+                .attr('text-anchor', 'middle')
+                .attr('font-size', '12px')
+                .attr('fill', '#666')
+                .text(d => d.name);
+        });
+    </script>
+</body>
+</html>

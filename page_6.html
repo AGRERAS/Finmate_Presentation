@@ -1,0 +1,314 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Money Mirror - Habit Analysis</title>
+<link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" rel="stylesheet"/>
+<script src="https://d3js.org/d3.v7.min.js"></script>
+<script src="https://cdn.tailwindcss.com"></script><style>
+        body {width: 100vw; height: 100vh; overflow: hidden; margin: 0;
+            padding: 0;}
+        .slide {
+            width: 100vw;
+            height: 100vh;
+            position: relative;
+            background: white;
+        }
+        .header-bar {
+            background: linear-gradient(90deg, #40E0D0 0%, #98FF98 100%);
+            height: 100px;
+        }
+        .insight-card {
+            background: #f5f5f5;
+            border-radius: 12px;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+            transition: all 0.3s ease;
+            border-left: 4px solid #40E0D0;
+        }
+        .insight-card:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 6px 15px rgba(0, 0, 0, 0.1);
+        }
+        .icon-circle {
+            width: 60px;
+            height: 60px;
+            border-radius: 50%;
+            background: rgba(64, 224, 208, 0.2);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        .feature-item {
+            display: flex;
+            align-items: center;
+            margin-bottom: 12px;
+        }
+        .feature-icon {
+            width: 36px;
+            height: 36px;
+            border-radius: 50%;
+            background: rgba(64, 224, 208, 0.15);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-right: 12px;
+            flex-shrink: 0;
+        }
+        #habit-chart {
+            width: 100%;
+            height: 220px;
+        }
+        .nav {
+            background: rgba(255, 255, 255, 0.9);
+            backdrop-filter: blur(10px);
+        }
+        .nav-btn {
+            @apply text-gray-700 hover:text-teal-500 text-xl px-3 py-2 transition-colors;
+        }
+        .nav-btn.inactive {
+            @apply text-gray-300 cursor-default hover:text-gray-300;
+        }
+   
+html {
+    overflow: hidden;
+}</style>
+</head>
+<body>
+<!-- Navigation -->
+<div class="nav fixed top-0 left-0 right-0 z-50 flex justify-between items-center px-4 py-2">
+    <div class="prev">
+        <a href="page_5.html" class="nav-btn"><i class="fas fa-chevron-left"></i></a>
+    </div>
+    <div class="page-indicator text-sm text-gray-600">Page 6</div>
+    <div class="next">
+        <a href="page_7.html" class="nav-btn"><i class="fas fa-chevron-right"></i></a>
+    </div>
+</div>
+<div class="slide pt-16" style=" overflow: hidden;">
+<!-- Header bar with title -->
+<div class="header-bar flex items-center px-4 sm:px-12">
+<h1 class="text-3xl sm:text-4xl font-bold text-white">Money Mirror - Habit Analysis</h1>
+</div>
+<!-- Main content -->
+<div class="p-4 sm:p-10 overflow-y-auto h-[calc(100vh-100px-64px)]">
+<!-- Introduction text -->
+<p class="text-gray-700 text-lg sm:text-xl mb-6">
+                This module analyzes your habits and shows how you handle your money, helping you understand your financial behavior.
+            </p>
+<div class="grid grid-cols-1 lg:grid-cols-5 gap-4 lg:gap-6">
+<!-- Left column: Example insights -->
+<div class="lg:col-span-2">
+<h3 class="text-lg sm:text-xl font-semibold text-gray-800 mb-4">Example Insights</h3>
+<!-- Insight 1 -->
+<div class="insight-card p-4 mb-4">
+<div class="flex items-start">
+<div class="icon-circle mr-3 flex-shrink-0">
+<i class="fas fa-exclamation-circle text-teal-500 text-lg sm:text-xl"></i>
+</div>
+<div>
+<p class="text-gray-800 font-medium text-sm sm:text-base">"You most often spend on Friday evenings — impulsive purchases?"</p>
+</div>
+</div>
+</div>
+<!-- Insight 2 -->
+<div class="insight-card p-4 mb-4">
+<div class="flex items-start">
+<div class="icon-circle mr-3 flex-shrink-0">
+<i class="fas fa-check-circle text-teal-500 text-lg sm:text-xl"></i>
+</div>
+<div>
+<p class="text-gray-800 font-medium text-sm sm:text-base">"You consistently save 10% of your income. Well done! Want to increase to 15%?"</p>
+</div>
+</div>
+</div>
+<!-- Benefits -->
+<h3 class="text-lg sm:text-xl font-semibold text-gray-800 mt-6 mb-3">Key Benefits</h3>
+<div class="feature-item">
+<div class="feature-icon">
+<i class="fas fa-lightbulb text-teal-500"></i>
+</div>
+<p class="text-gray-700 text-sm sm:text-base">Understand your spending patterns</p>
+</div>
+<div class="feature-item">
+<div class="feature-icon">
+<i class="fas fa-chart-line text-teal-500"></i>
+</div>
+<p class="text-gray-700 text-sm sm:text-base">Identify weak sides of your budget</p>
+</div>
+<div class="feature-item">
+<div class="feature-icon">
+<i class="fas fa-hand-holding-usd text-teal-500"></i>
+</div>
+<p class="text-gray-700 text-sm sm:text-base">Develop better financial habits</p>
+</div>
+</div>
+<!-- Right column: Visualization -->
+<div class="lg:col-span-3">
+<div class="bg-gray-50 rounded-lg p-4 h-full">
+<h3 class="text-base sm:text-lg font-semibold text-gray-700 mb-3">How Money Mirror Works</h3>
+<!-- Habit analysis visualization -->
+<div id="habit-chart"></div>
+<!-- Analysis process steps -->
+<div class="grid grid-cols-1 sm:grid-cols-3 gap-3 mt-4">
+<div class="bg-white p-3 rounded-lg shadow-sm text-center">
+<div class="icon-circle mx-auto mb-2 w-10 h-10 sm:w-12 sm:h-12">
+<i class="fas fa-database text-teal-500 text-lg sm:text-xl"></i>
+</div>
+<h4 class="font-medium text-gray-800 text-sm sm:text-base">Collect Data</h4>
+<p class="text-sm text-gray-600 text-xs sm:text-sm">Gathers spending history</p>
+</div>
+<div class="bg-white p-3 rounded-lg shadow-sm text-center">
+<div class="icon-circle mx-auto mb-2 w-10 h-10 sm:w-12 sm:h-12">
+<i class="fas fa-brain text-teal-500 text-lg sm:text-xl"></i>
+</div>
+<h4 class="font-medium text-gray-800 text-sm sm:text-base">Analyze Patterns</h4>
+<p class="text-sm text-gray-600 text-xs sm:text-sm">Identifies habits and trends</p>
+</div>
+<div class="bg-white p-3 rounded-lg shadow-sm text-center">
+<div class="icon-circle mx-auto mb-2 w-10 h-10 sm:w-12 sm:h-12">
+<i class="fas fa-comment-dots text-teal-500 text-lg sm:text-xl"></i>
+</div>
+<h4 class="font-medium text-gray-800 text-sm sm:text-base">Provide Insights</h4>
+<p class="text-sm text-gray-600 text-xs sm:text-sm">Delivers actionable feedback</p>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+<script>
+        // D3.js visualization for habit analysis
+        document.addEventListener('DOMContentLoaded', function() {
+            const width = document.getElementById('habit-chart').clientWidth;
+            const height = document.getElementById('habit-chart').clientHeight;
+           
+            const svg = d3.select('#habit-chart')
+                .append('svg')
+                .attr('width', width)
+                .attr('height', height);
+           
+            // Create a conceptual visualization of habit analysis
+            // This is a simplified representation without specific data
+           
+            // Draw axes
+            svg.append('line')
+                .attr('x1', 50)
+                .attr('y1', height - 50)
+                .attr('x2', width - 50)
+                .attr('y2', height - 50)
+                .attr('stroke', '#666')
+                .attr('stroke-width', 2);
+               
+            svg.append('line')
+                .attr('x1', 50)
+                .attr('y1', 50)
+                .attr('x2', 50)
+                .attr('y2', height - 50)
+                .attr('stroke', '#666')
+                .attr('stroke-width', 2);
+               
+            // Add axis labels
+            svg.append('text')
+                .attr('x', width / 2)
+                .attr('y', height - 15)
+                .attr('text-anchor', 'middle')
+                .attr('font-size', '14px')
+                .attr('fill', '#666')
+                .text('Time');
+               
+            svg.append('text')
+                .attr('transform', 'rotate(-90)')
+                .attr('x', -height / 2)
+                .attr('y', 15)
+                .attr('text-anchor', 'middle')
+                .attr('font-size', '14px')
+                .attr('fill', '#666')
+                .text('Spending');
+               
+            // Create a conceptual representation of spending patterns
+            // This is not based on actual data, just a visual representation
+           
+            // Generate some points for a wavy line to represent spending patterns
+            const points = [];
+            for (let i = 0; i < 20; i++) {
+                points.push({
+                    x: 50 + (i * (width - 100) / 19),
+                    y: height - 50 - (Math.sin(i * 0.5) * 50 + Math.random() * 30)
+                });
+            }
+           
+            // Create a line generator
+            const line = d3.line()
+                .x(d => d.x)
+                .y(d => d.y)
+                .curve(d3.curveBasis);
+               
+            // Draw the line
+            svg.append('path')
+                .datum(points)
+                .attr('fill', 'none')
+                .attr('stroke', '#40E0D0')
+                .attr('stroke-width', 3)
+                .attr('d', line);
+               
+            // Add circles at key points
+            svg.selectAll('circle')
+                .data([points[5], points[10], points[15]])
+                .enter()
+                .append('circle')
+                .attr('cx', d => d.x)
+                .attr('cy', d => d.y)
+                .attr('r', 8)
+                .attr('fill', '#FF7F50')
+                .attr('stroke', 'white')
+                .attr('stroke-width', 2);
+               
+            // Add annotations for key points
+            svg.append('text')
+                .attr('x', points[5].x + 10)
+                .attr('y', points[5].y - 15)
+                .attr('font-size', '12px')
+                .attr('fill', '#666')
+                .text('Impulsive Friday purchases');
+               
+            svg.append('text')
+                .attr('x', points[10].x - 70)
+                .attr('y', points[10].y + 20)
+                .attr('font-size', '12px')
+                .attr('fill', '#666')
+                .text('Regular savings');
+               
+            svg.append('text')
+                .attr('x', points[15].x + 10)
+                .attr('y', points[15].y - 15)
+                .attr('font-size', '12px')
+                .attr('fill', '#666')
+                .text('Monthly subscriptions');
+               
+            // Add a trend line
+            const trendPoints = [];
+            for (let i = 0; i < 20; i++) {
+                trendPoints.push({
+                    x: 50 + (i * (width - 100) / 19),
+                    y: height - 50 - (Math.sin(i * 0.2) * 20 + 40)
+                });
+            }
+           
+            const trendLine = d3.line()
+                .x(d => d.x)
+                .y(d => d.y)
+                .curve(d3.curveBasis);
+               
+            svg.append('path')
+                .datum(trendPoints)
+                .attr('fill', 'none')
+                .attr('stroke', '#FF7F50')
+                .attr('stroke-width', 2)
+                .attr('stroke-dasharray', '5,5')
+                .attr('d', trendLine);
+        });
+    </script>
+</body>
+</html>

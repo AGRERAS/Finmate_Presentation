@@ -1,0 +1,351 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Analytics and Budget Management</title>
+<link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" rel="stylesheet"/>
+<script src="https://d3js.org/d3.v7.min.js"></script>
+<script src="https://cdn.tailwindcss.com"></script><style>
+        body {width: 100vw; height: 100vh; overflow: hidden; margin: 0;
+            padding: 0;}
+        .slide {
+            width: 100vw;
+            height: 100vh;
+            position: relative;
+            background: white;
+        }
+        .header-bar {
+            background: linear-gradient(90deg, #40E0D0 0%, #98FF98 100%);
+            height: 100px;
+        }
+        .feature-card {
+            background: #f5f5f5;
+            border-radius: 12px;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+            transition: all 0.3s ease;
+        }
+        .feature-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 8px 16px rgba(0, 0, 0, 0.1);
+        }
+        .icon-circle {
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            background: rgba(64, 224, 208, 0.2);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        .chart-container {
+            background: #f9f9f9;
+            border-radius: 12px;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+        }
+        .nav {
+            background: rgba(255, 255, 255, 0.9);
+            backdrop-filter: blur(10px);
+        }
+        .nav-btn {
+            @apply text-gray-700 hover:text-teal-500 text-xl px-3 py-2 transition-colors;
+        }
+        .nav-btn.inactive {
+            @apply text-gray-300 cursor-default hover:text-gray-300;
+        }
+   
+html {
+    overflow: hidden;
+}</style>
+</head>
+<body>
+<!-- Navigation -->
+<div class="nav fixed top-0 left-0 right-0 z-50 flex justify-between items-center px-4 py-2">
+    <div class="prev">
+        <a href="page_6.html" class="nav-btn"><i class="fas fa-chevron-left"></i></a>
+    </div>
+    <div class="page-indicator text-sm text-gray-600">Page 7</div>
+    <div class="next">
+        <a href="page_8.html" class="nav-btn"><i class="fas fa-chevron-right"></i></a>
+    </div>
+</div>
+<div class="slide pt-16" style=" overflow: hidden;">
+<!-- Header bar with title -->
+<div class="header-bar flex items-center px-4 sm:px-12">
+<h1 class="text-3xl sm:text-4xl font-bold text-white">Analytics and Budget Management</h1>
+</div>
+<!-- Main content -->
+<div class="p-4 sm:p-8 overflow-y-auto h-[calc(100vh-100px-64px)]">
+<!-- Introduction text -->
+<p class="text-gray-700 text-lg sm:text-xl mb-6">
+                Everything you spend or earn is visualized: graphs and charts of expenses, dynamics by days, weeks, and months, distribution by categories.
+            </p>
+<div class="grid grid-cols-1 lg:grid-cols-2 gap-4 lg:gap-8">
+<!-- Left column: Features -->
+<div class="space-y-4 sm:space-y-6">
+<!-- Feature 1 -->
+<div class="feature-card p-4 flex items-start">
+<div class="icon-circle mr-4 flex-shrink-0">
+<i class="fas fa-chart-line text-teal-500 text-lg sm:text-xl"></i>
+</div>
+<div>
+<h3 class="text-base sm:text-lg font-semibold text-gray-800 mb-1">Expense Visualization</h3>
+<p class="text-gray-600 text-sm sm:text-base">
+                                See your spending patterns with interactive charts that update in real-time, making financial data understandable at a glance.
+                            </p>
+</div>
+</div>
+<!-- Feature 2 -->
+<div class="feature-card p-4 flex items-start">
+<div class="icon-circle mr-4 flex-shrink-0">
+<i class="fas fa-bullseye text-teal-500 text-lg sm:text-xl"></i>
+</div>
+<div>
+<h3 class="text-base sm:text-lg font-semibold text-gray-800 mb-1">Budget Limits</h3>
+<p class="text-gray-600 text-sm sm:text-base">
+                                Set budget limits for categories like food, transport, and entertainment. AI will warn you when you're approaching these limits.
+                            </p>
+</div>
+</div>
+<!-- Feature 3 -->
+<div class="feature-card p-4 flex items-start">
+<div class="icon-circle mr-4 flex-shrink-0">
+<i class="fas fa-brain text-teal-500 text-lg sm:text-xl"></i>
+</div>
+<div>
+<h3 class="text-base sm:text-lg font-semibold text-gray-800 mb-1">Smart Warnings</h3>
+<p class="text-gray-600 text-sm sm:text-base">
+                                Receive timely AI alerts when your spending patterns deviate from normal, helping you stay on track with your financial goals.
+                            </p>
+</div>
+</div>
+</div>
+<!-- Right column: Visualization -->
+<div class="chart-container p-4">
+<h3 class="text-base sm:text-lg font-semibold text-gray-700 mb-4 text-center">Sample Analytics Dashboard</h3>
+<div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+<!-- Category distribution chart -->
+<div class="bg-white rounded-lg p-3">
+<h4 class="text-xs sm:text-sm font-medium text-gray-600 mb-2">Monthly Spending by Category</h4>
+<div class="h-32" id="category-chart"></div>
+</div>
+<!-- Spending trend chart -->
+<div class="bg-white rounded-lg p-3">
+<h4 class="text-xs sm:text-sm font-medium text-gray-600 mb-2">Weekly Spending Trend</h4>
+<div class="h-32" id="trend-chart"></div>
+</div>
+<!-- Budget status -->
+<div class="bg-white rounded-lg p-3 sm:col-span-2">
+<h4 class="text-xs sm:text-sm font-medium text-gray-600 mb-2">Budget Status</h4>
+<div class="h-24" id="budget-chart"></div>
+</div>
+</div>
+<!-- AI Warning Example -->
+<div class="mt-4 bg-yellow-50 border-l-4 border-yellow-400 p-3 rounded">
+<div class="flex">
+<div class="flex-shrink-0">
+<i class="fas fa-exclamation-triangle text-yellow-400"></i>
+</div>
+<div class="ml-3">
+<p class="text-sm text-yellow-700">
+<strong>AI Alert:</strong> You're 85% of the way to your food budget limit. Consider adjusting your spending.
+                            </p>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+<script>
+        // Simple D3.js visualization for analytics dashboard
+        document.addEventListener('DOMContentLoaded', function() {
+            // Category Distribution Chart (Donut)
+            const categoryWidth = document.getElementById('category-chart').clientWidth;
+            const categoryHeight = document.getElementById('category-chart').clientHeight;
+            const categoryRadius = Math.min(categoryWidth, categoryHeight) / 2 - 10;
+           
+            const categorySvg = d3.select('#category-chart')
+                .append('svg')
+                .attr('width', categoryWidth)
+                .attr('height', categoryHeight)
+                .append('g')
+                .attr('transform', `translate(${categoryWidth / 2}, ${categoryHeight / 2})`);
+           
+            // Sample data for categories (no specific values, just for visualization)
+            const categoryData = [
+                {name: "Food", value: 30},
+                {name: "Transport", value: 20},
+                {name: "Entertainment", value: 25},
+                {name: "Utilities", value: 15},
+                {name: "Other", value: 10}
+            ];
+           
+            const categoryColor = d3.scaleOrdinal()
+                .domain(categoryData.map(d => d.name))
+                .range(["#40E0D0", "#98FF98", "#FF7F50", "#E6E6FA", "#F5F5F5"]);
+           
+            const pie = d3.pie()
+                .value(d => d.value)
+                .sort(null);
+           
+            const arc = d3.arc()
+                .innerRadius(categoryRadius * 0.6)
+                .outerRadius(categoryRadius);
+           
+            const arcs = categorySvg.selectAll('arc')
+                .data(pie(categoryData))
+                .enter()
+                .append('g');
+           
+            arcs.append('path')
+                .attr('d', arc)
+                .attr('fill', d => categoryColor(d.data.name))
+                .attr('stroke', 'white')
+                .style('stroke-width', '2px');
+           
+            // Trend Chart (Line)
+            const trendWidth = document.getElementById('trend-chart').clientWidth;
+            const trendHeight = document.getElementById('trend-chart').clientHeight;
+           
+            const trendSvg = d3.select('#trend-chart')
+                .append('svg')
+                .attr('width', trendWidth)
+                .attr('height', trendHeight);
+           
+            // Sample data for weekly trend
+            const trendData = [
+                {week: 1, value: 42},
+                {week: 2, value: 38},
+                {week: 3, value: 52},
+                {week: 4, value: 48}
+            ];
+           
+            const xScale = d3.scaleLinear()
+                .domain([1, 4])
+                .range([30, trendWidth - 10]);
+           
+            const yScale = d3.scaleLinear()
+                .domain([30, 60])
+                .range([trendHeight - 20, 10]);
+           
+            // Add X axis
+            trendSvg.append('g')
+                .attr('transform', `translate(0, ${trendHeight - 20})`)
+                .call(d3.axisBottom(xScale).ticks(4).tickFormat(d => `Week ${d}`));
+           
+            // Add Y axis
+            trendSvg.append('g')
+                .attr('transform', 'translate(30, 0)')
+                .call(d3.axisLeft(yScale).ticks(3));
+           
+            // Add line
+            const line = d3.line()
+                .x(d => xScale(d.week))
+                .y(d => yScale(d.value));
+           
+            trendSvg.append('path')
+                .datum(trendData)
+                .attr('fill', 'none')
+                .attr('stroke', '#40E0D0')
+                .attr('stroke-width', 2)
+                .attr('d', line);
+           
+            // Add dots
+            trendSvg.selectAll('circle')
+                .data(trendData)
+                .enter()
+                .append('circle')
+                .attr('cx', d => xScale(d.week))
+                .attr('cy', d => yScale(d.value))
+                .attr('r', 4)
+                .attr('fill', '#40E0D0');
+           
+            // Budget Status Chart (Bar with limit)
+            const budgetWidth = document.getElementById('budget-chart').clientWidth;
+            const budgetHeight = document.getElementById('budget-chart').clientHeight;
+           
+            const budgetSvg = d3.select('#budget-chart')
+                .append('svg')
+                .attr('width', budgetWidth)
+                .attr('height', budgetHeight);
+           
+            // Sample data for budget status
+            const budgetData = [
+                {category: "Food", spent: 750, limit: 1000},
+                {category: "Transport", spent: 400, limit: 600},
+                {category: "Entertainment", spent: 300, limit: 500}
+            ];
+           
+            const budgetXScale = d3.scaleBand()
+                .domain(budgetData.map(d => d.category))
+                .range([40, budgetWidth - 10])
+                .padding(0.3);
+           
+            const budgetYScale = d3.scaleLinear()
+                .domain([0, 1000])
+                .range([budgetHeight - 20, 10]);
+           
+            // Add X axis
+            budgetSvg.append('g')
+                .attr('transform', `translate(0, ${budgetHeight - 20})`)
+                .call(d3.axisBottom(budgetXScale));
+           
+            // Add bars for spent amount
+            budgetSvg.selectAll('.bar-spent')
+                .data(budgetData)
+                .enter()
+                .append('rect')
+                .attr('class', 'bar-spent')
+                .attr('x', d => budgetXScale(d.category))
+                .attr('y', d => budgetYScale(d.spent))
+                .attr('width', budgetXScale.bandwidth() / 2)
+                .attr('height', d => budgetHeight - 20 - budgetYScale(d.spent))
+                .attr('fill', '#40E0D0');
+           
+            // Add bars for limit amount
+            budgetSvg.selectAll('.bar-limit')
+                .data(budgetData)
+                .enter()
+                .append('rect')
+                .attr('class', 'bar-limit')
+                .attr('x', d => budgetXScale(d.category) + budgetXScale.bandwidth() / 2)
+                .attr('y', d => budgetYScale(d.limit))
+                .attr('width', budgetXScale.bandwidth() / 2)
+                .attr('height', d => budgetHeight - 20 - budgetYScale(d.limit))
+                .attr('fill', '#E6E6FA')
+                .attr('stroke', '#40E0D0')
+                .attr('stroke-width', 1);
+           
+            // Add legend
+            const legend = budgetSvg.append('g')
+                .attr('transform', `translate(${budgetWidth - 100}, 5)`);
+           
+            legend.append('rect')
+                .attr('width', 10)
+                .attr('height', 10)
+                .attr('fill', '#40E0D0');
+           
+            legend.append('text')
+                .attr('x', 15)
+                .attr('y', 8)
+                .attr('font-size', '8px')
+                .text('Spent');
+           
+            legend.append('rect')
+                .attr('width', 10)
+                .attr('height', 10)
+                .attr('y', 15)
+                .attr('fill', '#E6E6FA')
+                .attr('stroke', '#40E0D0')
+                .attr('stroke-width', 1);
+           
+            legend.append('text')
+                .attr('x', 15)
+                .attr('y', 23)
+                .attr('font-size', '8px')
+                .text('Limit');
+        });
+    </script>
+</body>
+</html>
